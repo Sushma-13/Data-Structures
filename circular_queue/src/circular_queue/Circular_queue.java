@@ -1,5 +1,5 @@
 package circular_queue;
-
+/* author SUSHMA */
 
 public class Circular_queue {
     final int CAPACITY=5;
