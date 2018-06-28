@@ -144,6 +144,39 @@ public class LinkedList {
         {return loc;}
         return -1;
     }
+    void swap_numbers(int loc1,int loc2){
+        if(loc1>size() ||loc2>size()){
+            System.out.println("Invalid location");
+        }
+        else{
+            node temp1=head;
+            node temp2=head;
+            int i=1;
+            while(i<loc1){
+                temp1=temp1.next;
+                i++;
+            }
+            i=1;
+             while(i<loc2){
+                temp2=temp2.next;
+                i++;
+            }
+             int temp=temp1.data;
+             temp1.data=temp2.data;
+             temp2.data=temp;
+             
+             
+        }
+    }
+    void reverse_with_num_swap(){
+        int i=1,j=size();
+        
+        while(i<j){
+            swap_numbers(i,j);
+            i++;
+            j--;
+        }
+    }
 
     
     public static void main(String[] args) {
@@ -162,6 +195,10 @@ public class LinkedList {
         ll.delete(4);
         ll.display();
         System.out.println("loc = "+ll.search(30));
+        ll.swap_numbers(1,4);
+        ll.display();
+        ll.reverse_with_num_swap();
+        ll.display();
     }
     
 }
