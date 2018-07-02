@@ -11,22 +11,44 @@ public class BST {
               this.data=data;
           }
       }
-     static void insert(int key) {
+    static void insert(int key) {
        root = insertRec(root, key);
     }
     static node insertRec(node root, int key) {
-        /* If the tree is empty, return a new node */
         if (root == null) {
             root = new node(key);
             return root;
         }
-        /* Otherwise, recur down the tree */
         if (key <= root.data)
             root.left = insertRec(root.left, key);
         else if (key > root.data)
             root.right = insertRec(root.right, key);
  
-        /* return the (unchanged) node pointer */
+        return root;
+    }
+    static void deleteKey(int key){
+        root = deleteRec(root, key);
+    }
+    static node deleteRec(node root, int key){
+        if (root == null)  
+            return root;
+        //case1:no child
+        if (key < root.data)
+            root.left = deleteRec(root.left, key);
+        else if (key > root.data)
+            root.right = deleteRec(root.right, key);
+        else
+        {    //case2:1 child
+            if (root.left == null)
+                return root.right;
+            else if (root.right == null)
+                return root.left;
+            //case 3: 2 child
+            else{
+            root.data = minValueinrightsubtree(root.right); 
+            root.right = deleteRec(root.right, root.data);}
+        }
+ 
         return root;
     }
     static void inorder(node root){
@@ -58,28 +80,6 @@ public class BST {
  
     return search(root.right, key);
 }
-    static void deleteKey(int key){
-        root = deleteRec(root, key);
-    }
-    static node deleteRec(node root, int key){
-        if (root == null)  return root;
-        if (key < root.data)
-            root.left = deleteRec(root.left, key);
-        else if (key > root.data)
-            root.right = deleteRec(root.right, key);
-        else
-        {
-            if (root.left == null)
-                return root.right;
-            else if (root.right == null)
-                return root.left;
-            else{
-            root.data = minValueinrightsubtree(root.right); 
-            root.right = deleteRec(root.right, root.data);}
-        }
- 
-        return root;
-    }
     static int minValueinrightsubtree(node root){
         int minv = root.data;
         while (root.left != null)
@@ -89,7 +89,7 @@ public class BST {
         }
         return minv;
     }
-    static int findmaxinleftsubtree(node root){
+    static int maxValueinleftsubtree(node root){
         int maxv = root.data;
         while (root.right != null)
         {
@@ -99,11 +99,19 @@ public class BST {
         return maxv;
         
     }
+    static int depth(node root){
+        if(root==null)
+            return 0;
+        int ldepth=depth(root.left);
+        int rdepth=depth(root.right);
+        if(ldepth>=rdepth)
+            return ldepth+1;
+        else
+            return rdepth+1;
+    }
     public static void main(String args[]){
       insert(20);insert(10);insert(30);insert(4);insert(3);insert(21);insert(12);insert(11);insert(13);insert(14);
-      inorder(root);
-      System.out.println("");
-      deleteKey(20);
-      inorder(root);
+      inorder(root);System.out.println("");
+      System.out.println(depth(root));
     }
 }
