@@ -2,6 +2,7 @@ package bst;
 /**
  * @author SUSHMA
  */
+import java.util.*;
 public class BST {
     static node root;
     static class node{
@@ -109,9 +110,29 @@ public class BST {
         else
             return rdepth+1;
     }
+    static void levelordertraversal(node root){
+        Queue<node> q=new LinkedList<>();
+        if(root==null)
+            System.out.println("Tree empty");
+        else{
+        q.add(root);
+        while(!q.isEmpty()){
+           node temp=q.peek();
+            if(temp.left!=null)
+            q.add(temp.left);
+            if(temp.right!=null)
+            q.add(temp.right);
+    
+            System.out.print(temp.data+" ");
+            q.remove();
+        }
+        System.out.println("");
+        }
+    }
     public static void main(String args[]){
       insert(20);insert(10);insert(30);insert(4);insert(3);insert(21);insert(12);insert(11);insert(13);insert(14);
       inorder(root);System.out.println("");
       System.out.println(depth(root));
+      levelordertraversal(root);
     }
 }
